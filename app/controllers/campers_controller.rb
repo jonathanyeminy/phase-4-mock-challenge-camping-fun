@@ -1,5 +1,5 @@
 class CampersController < ApplicationController
-    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    # rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
     # rescue_from ActiveRecord::RecordInvalid, with: :bad_request
 
     def index
@@ -18,7 +18,7 @@ class CampersController < ApplicationController
     def create
         new_camper = Camper.create!(camper_params)
         if new_camper  
-        render json: new_camper
+        render json: new_camper, status: :created
         else bad_request
         end
     end
@@ -34,7 +34,7 @@ class CampersController < ApplicationController
     end
 
     def bad_request
-        render json: { error: "validation errors" }, status: :bad_request
+        render json: { error: "validation errors" }, status: 422
     end
 
 end
